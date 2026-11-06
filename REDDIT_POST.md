@@ -1,67 +1,57 @@
-# 📢 Post Ufficiale per Reddit (Pronto da copiare e incollare)
-*Subreddit consigliati: r/macgaming, r/sideloaded, r/emulation, r/NintendoSwitchDecomps*
+# Reddit Announcement Post (Ready to Post)
+*Recommended Subreddits: r/macgaming, r/sideloaded, r/emulation, r/NintendoSwitchDecomps*
 
 ---
 
-### **TITOLO:**
-> **[RELEASE] NXremote – Virtual Nintendo Switch Controller per iOS (.IPA) per qualsiasi porting nativo Mac/PC (nxnative/C) con zero latenza e auto-discovery!**
+### **TITLE:**
+> **[Release] NXremote: Low-latency virtual Nintendo Switch controller for iOS (.IPA) with dynamic dual sticks & C drop-in SDK for native game ports**
 
 ---
 
-### **TESTO DEL POST:**
+### **POST BODY:**
 
-Ciao a tutti ragazzi! 🎮
+Hey everyone,
 
-Oggi voglio condividere con voi un progetto a cui ho lavorato: **NXremote**, un companion controller virtuale per iPhone e iPad insieme al relativo SDK in C open-source per integrare il supporto mobile in **qualsiasi porting nativo Nintendo Switch** (come *Luigi's Mansion 2*, *Mario Kart World*, e qualunque progetto compilato con `nxnative`, `dm`, decompilazioni o motori C/C++/SDL2).
+I wanted to share a project I've been working on: **NXremote**, an iOS companion controller app along with an ultra-lightweight C drop-in SDK designed for native game ports (like *Luigi's Mansion 2*, *Mario Kart*, and any decompilation or engine built with `nxnative`, `dm`, or C/SDL2).
 
----
+### Why I built this
+When playing native ports on Mac or PC, carrying a physical gamepad isn't always practical, and existing mobile remote apps often suffer from clunky UI, high input lag, or require tedious manual IP configuration every time you change Wi-Fi networks or connect over a personal hotspot.
 
-### 🖼️ Screenshot & Icona Ufficiale (Vedi allegati al post):
-*(Allega al post di Reddit le due immagini incluse nella repo: `assets/icon.png` per l'icona ufficiale e `assets/layout.png` per l'interfaccia in-game!)*
+NXremote solves this:
 
-1. **Icona Ufficiale**: Design minimale Joy-Con Neon Blue/Red con onde wireless.
-2. **Layout In-Game (Stile Citra Minimalist)**:
-   - **Doppio Stick Dinamico Invisibile**: Tocchi il vuoto a sinistra per muovere il personaggio (`lx, ly`), tocchi il vuoto a destra per orientare la **visuale / telecamera / mira Poltergust** (`rx, ry`). Zero elementi ingombranti a coprire lo schermo!
-   - **D-Pad a croce Nintendo classico** ingrandito in basso a sinistra con frecce direzionali.
-   - **Tasti ABXY a diamante** in vetro satinato in basso a destra.
-   - **HUD Centrale dinamico**: Riconosce da solo il gioco in riproduzione (es. `LUIGI'S MANSION 2`) con indicatore di batteria stile iPhone e percentuale reale.
-   - **Dorsali completi**: [ZL] e [L] a sinistra, [R] e [ZR] a destra, tasti [-] e [+], e supporto allo scuotimento fisico dell'iPhone (Shake!).
+1. **Clean Dynamic Dual-Stick Touch Controls**:
+   - Instead of static thumbsticks blocking the action, the screen is split into two clean touch zones:
+     - **Left screen half**: Dynamic Stick L for character movement.
+     - **Right screen half**: Dynamic Stick R for camera rotation, aiming, and flashlight.
+   - Traditional Nintendo D-Pad with directional arrows, ABXY action diamond, full shoulder triggers (`ZL`/`L`/`R`/`ZR`), `+`/`-`, and physical device shake gesture support.
+   - Central HUD displaying live battery percentage and connected game status.
 
----
+2. **Zero-Config Multi-Network Discovery**:
+   - Resolves host machines over Bonjour mDNS automatically.
+   - On isolated guest Wi-Fi networks or cellular hotspots where multicast/Bonjour is blocked, NXremote automatically sweeps the local subnet in under a second and connects directly without needing manual configuration.
 
-### 🌐 Connessione Multi-Rete (Funziona ovunque!):
-Una delle cose più frustranti di molte app controller è dover digitare l'indirizzo IP a mano o vederle smettere di funzionare appena ci si sposta su un'altra rete o hotspot.
-- **Bonjour / mDNS**: Trova il Mac all'istante appena lanci il gioco.
-- **Subnet Auto-Scan**: Se ti colleghi a un'altra rete Wi-Fi o a un Hotspot cellulare dove Bonjour è bloccato, NXremote scansiona la subnet locale in meno di 1 secondo e trova il Mac automaticamente!
-- **Zero Configurazione**: Apri il gioco sul Mac, apri l'app sull'iPhone e sei già pronto a giocare.
+3. **Sub-Frame Input Latency**:
+   - Streams 12-byte compact binary frames over local WebSockets at 60 Hz.
 
----
+4. **2-Line C Drop-in SDK for Game Ports**:
+   - If you're building a port using `nxnative` or C, the server integration takes literally two lines:
+   ```c
+   #include "switchpad_host.h"
+   // In main():
+   switchpad_host_start(8080, on_mobile_input);
+   ```
 
-### 💻 Per Sviluppatori & Modder (SDK Drop-In per `nxnative`):
-Se state sviluppando o compilando un porting con `nxnative`, bastano letteralmente **2 file** (`switchpad_host.h` e `switchpad_host.m`) e **2 righe di codice C**:
-
-```c
-#include "switchpad_host.h"
-#include "dm_input.h" // Per engine nxnative / dm
-
-// Inoltra i comandi e la visuale al gioco a 60 Hz:
-static void on_phone_input(uint32_t buttons, int16_t lx, int16_t ly, int16_t rx, int16_t ry) {
-    dm_pad_set(buttons, lx, ly, rx, ry);
-}
-
-// Nel main():
-switchpad_host_start(8080, on_phone_input);
-```
+5. **Ready for iOS Sideloading**:
+   - Pre-compiled `.ipa` built with `LC_DYLD_INFO_ONLY` (zero chained fixup issues), tested on TrollStore, AltStore, SideStore, and Feather.
 
 ---
 
-### 📲 Download iOS (.IPA):
-Il file pre-compilato **`NXremote.ipa`** è scaricabile direttamente dalla sezione Releases della repository GitHub.
-- Compilato con `LC_DYLD_INFO_ONLY` (zero fixup chains per la massima compatibilità).
-- Pronto all'installazione immediata con **TrollStore**, **Feather**, **AltStore** e **SideStore**.
-- Firmato con identificativo `com.demxxx.nxremote`.
+### Links & Downloads:
+- **GitHub Repository**: https://github.com/Alexxxxxxxxx11/NXremote
+- **Latest IPA Release**: https://github.com/Alexxxxxxxxx11/NXremote/releases/latest
 
-👉 **GitHub Repository**: https://github.com/Alexxxxxxxxx11/NXremote
+*(Attach `assets/icon.png` and `assets/layout.png` from the repo to your Reddit post for visual preview)*
 
-Fatemi sapere cosa ne pensate nei commenti!
+Feedback, bug reports, and PRs are welcome!
+
 — **demxxx**

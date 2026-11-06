@@ -1,115 +1,135 @@
-# NXremote 🎮
-### *Ultra-Low Latency Virtual Nintendo Switch Controller for iOS*
-**Created by demxxx**
+# NXremote
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Platform: iOS 15+](https://img.shields.io/badge/Platform-iOS%2015%2B-black.svg?logo=apple)](releases/)
-[![Bundle ID](https://img.shields.io/badge/Bundle%20ID-com.demxxx.nxremote-purple.svg)](ios_controller/)
-
----
+A low-latency virtual Nintendo Switch controller for iOS, designed as a companion input device for native macOS/PC game ports built with `nxnative`, decompilations, and C/SDL2 game engines.
 
 <p align="center">
-  <img src="assets/icon.png" width="160" height="160" alt="NXremote Icon" style="border-radius: 36px; box-shadow: 0 14px 40px rgba(0,0,0,0.6);" />
-  <br>
-  <em>Official NXremote Joy-Con Wireless Icon</em>
+  <img src="assets/icon.png" width="130" alt="NXremote">
+</p>
+
+<p align="center">
+  <a href="https://github.com/Alexxxxxxxxx11/NXremote/releases/latest"><img src="https://img.shields.io/badge/Release-v1.0.0-blue.svg" alt="Release"></a>
+  <img src="https://img.shields.io/badge/Platform-iOS%2015%2B-black.svg?logo=apple" alt="Platform">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License"></a>
+  <img src="https://img.shields.io/badge/Author-demxxx-purple.svg" alt="Author">
 </p>
 
 ---
 
-## 📸 Screenshots & Layout dell'App
+## Overview
+
+NXremote turns your iPhone or iPad into an ultra-low latency wireless controller without requiring physical gamepads or Bluetooth pairing headaches. It communicates directly with host games over local WebSockets at 60 Hz with compact 12-byte binary input packets.
+
+### Key Features
+- **Dynamic Dual-Touch Virtual Sticks**:
+  - **Left Screen Half**: Dynamic Stick L (character movement). Touch anywhere on the left side to engage.
+  - **Right Screen Half**: Dynamic Stick R (camera / flashlight / aiming). Touch anywhere on the right side to look around.
+  - No bulky on-screen thumbsticks obstructing your view.
+- **Classic Controls**: Full-sized Nintendo D-Pad with directional arrows, ABXY action diamond, and responsive shoulder triggers (`ZL`, `L`, `R`, `ZR`).
+- **Physical Shake Support**: Accelerometer-based shake detection forwarded directly to the game engine.
+- **Host Status & Telemetry HUD**: Displays the active game title (e.g., *Luigi's Mansion 2*) along with live device battery percentage.
+- **Robust Multi-Network Discovery**:
+  - Automatically resolves host machines via Bonjour mDNS.
+  - Built-in asynchronous subnet auto-scan falls back gracefully on mobile hotspots and networks where multicast traffic is restricted.
+  - Manual IP entry fallback available with a tap on the status bar if needed.
+- **Sideloading Ready**: Mach-O binary compiled with standard `LC_DYLD_INFO_ONLY` load commands (zero chained fixups) for seamless installation via TrollStore, AltStore, SideStore, and Feather.
+
+---
+
+## Layout
 
 <p align="center">
-  <img src="assets/layout.png" width="85%" alt="NXremote Clean Controller Layout" style="border-radius: 18px; box-shadow: 0 8px 30px rgba(0,0,0,0.5);" />
+  <img src="assets/layout.png" width="85%" alt="NXremote Controller Layout">
 </p>
 
-- **Metà Sinistra (Touch Dinamico)**: Tocca il vuoto a sinistra per muovere Luigi (`Stick L` - Movimento / `lx, ly`).
-- **Metà Destra (Touch Dinamico)**: Tocca il vuoto a destra per controllare la **visuale / telecamera / mira Poltergust** (`Stick R` - Visuale / `rx, ry`).
-- **D-Pad a croce Nintendo**: Classico ed ingrandito in basso a sinistra con frecce direzionali.
-- **Tasti Azione ABXY**: Diamante Nintendo ergonomico in vetro satinato.
-- **HUD Centrale**: Riconoscimento automatico del titolo in riproduzione (es. `LUIGI'S MANSION 2`) + percentuale e icona batteria stile iPhone.
-- **Dorsali completi**: [ZL] e [L] a sinistra, [R] e [ZR] a destra, tasti [-] e [+], e supporto allo scuotimento fisico dell'iPhone (Shake!).
-
 ---
 
-## ⚡ Caratteristiche Tecniche
+## C SDK Integration
 
-- 🌐 **Multi-Network Auto-Discovery**:
-  - **Subnet Auto-Scan**: Funziona su **qualsiasi rete Wi-Fi o Hotspot**, anche su reti dove Bonjour/mDNS è bloccato (Hotspot cellulare, reti isolate).
-  - **Zero Configurazione**: Trova automaticamente il Mac ed il gioco in meno di 1 secondo.
-- ⚡ **Zero Latency (60 Hz)**: Pacchetti binari ultra-compatti da 12-byte via WebSocket locale.
-- 🛡️ **Compatibilità Totale Sideloading**: File Mach-O a 64-bit compilato con `LC_DYLD_INFO_ONLY` (zero fixup chains), pronto per **TrollStore**, **Feather**, **AltStore** e **SideStore**.
+Integrating NXremote into any `nxnative` port or C/C++ game loop requires only two source files (`switchpad_host.h` and `switchpad_host.m`) and two lines of initialization code.
 
----
+The SDK hosts a lightweight WebSocket server and announces its presence over Bonjour and local HTTP endpoints.
 
-## 🕹️ Come implementare l'SDK in QUALSIASI gioco fatto con `nxnative`
+### 1. Include Files
+Copy `switchpad_host.h` and `switchpad_host.m` from the `sdk/` directory into your project.
 
-L'SDK è drop-in: richiede solo **2 file** e **2 righe di codice C**:
-
-### 1. File necessari (nella cartella `sdk/`):
-- `switchpad_host.h`
-- `switchpad_host.m`
-
-### 2. Integrazione nel codice del gioco
-Nel file principale del frontend del gioco (es. `front_mac.m` o `main.m`):
+### 2. Callback-Driven Integration (`nxnative` / Event Loop)
 
 ```c
 #include "switchpad_host.h"
-#include "dm_input.h" // Se usi l'engine nxnative / dm
+#include "dm_input.h" // For nxnative / dm engines
 
-// Callback invocato ad ogni pacchetto ricevuto dall'iPhone (60 Hz)
+// 60 Hz input callback
 static void on_mobile_input(uint32_t buttons, int16_t lx, int16_t ly, int16_t rx, int16_t ry) {
-    uint64_t full_mask = (uint64_t)(buttons & 0xffff);
+    uint64_t mask = (uint64_t)(buttons & 0xffff);
     if (buttons & SWITCHPAD_BTN_SHAKE) {
-        full_mask |= (1ULL << 32); // DM_BTN_SHAKE (Scuotimento)
+        mask |= (1ULL << 32); // DM_BTN_SHAKE
     }
     
-    // Inoltra direttamente al gioco (lx/ly muove Luigi, rx/ry orienta la visuale/torcia)
-    dm_pad_set(full_mask, lx, ly, rx, ry);
+    // Forward inputs directly to the engine
+    dm_pad_set(mask, lx, ly, rx, ry);
 }
 
-// Nel main() o all'avvio del gioco:
 int main(int argc, char **argv) {
-    // 1 riga per avviare il server WebSocket e il broadcast mDNS/Bonjour:
+    // Start listener on port 8080
     switchpad_host_start(8080, on_mobile_input);
-    
-    // ... loop normale del gioco ...
+
+    // Normal game loop...
+    return 0;
 }
 ```
 
-### 3. Per motori generici C / C++ o SDL2 (Polling continuo a frame)
-Se il motore legge gli input in un ciclo continuo `while (running)`:
+### 3. Polling Integration (Generic C / SDL2 Engines)
+
+If your game polls inputs frame-by-frame:
 
 ```c
 #include "switchpad_host.h"
 
-// All'avvio:
+// During engine startup:
 switchpad_host_start(8080, NULL);
 
-// Nel Game Loop:
+// Inside your main loop:
 uint32_t buttons = 0;
 int16_t lx = 0, ly = 0, rx = 0, ry = 0;
 switchpad_host_get_state(&buttons, &lx, &ly, &rx, &ry);
 
 if (buttons & SWITCHPAD_BTN_A) {
-    // Tasto A premuto!
+    // Button A pressed
 }
-// lx, ly = Movimento stick sinistro
-// rx, ry = Visuale / telecamera stick destro
+// lx, ly: Left stick axes (-32768 to 32767)
+// rx, ry: Right stick axes (-32768 to 32767)
 ```
 
 ---
 
-## 📲 Installazione iOS (.IPA)
+## Binary Protocol Specification
 
-Scarica il pacchetto già compilato e pronto all'uso da [releases/NXremote.ipa](releases/NXremote.ipa):
+Inputs are streamed over WebSocket as 12-byte little-endian binary frames:
 
-- **TrollStore**: Apri il file `.ipa` e clicca **Install** (installazione permanente senza revocazioni).
-- **Feather / Scarlet / ESign**: Firma direttamente sul dispositivo con il tuo certificato personale o d'impresa.
-- **AltStore / SideStore**: Installa via sideloading standard collegando l'iPhone al Mac.
+| Offset | Type | Description |
+|:---:|:---:|:---|
+| `0x00` | `uint32_t` | Button bitmask (`SWITCHPAD_BTN_*`) |
+| `0x04` | `int16_t` | Left Stick X axis (`-32768` to `32767`) |
+| `0x06` | `int16_t` | Left Stick Y axis (`-32768` to `32767`) |
+| `0x08` | `int16_t` | Right Stick X axis (`-32768` to `32767`) |
+| `0x0A` | `int16_t` | Right Stick Y axis (`-32768` to `32767`) |
 
 ---
 
-## 👤 Credits & Autore
-- **Ideatore e Sviluppatore**: **demxxx**
-- **Firma / Bundle ID**: `com.demxxx.nxremote`
-- **Licenza**: MIT License
+## Installation
+
+Pre-built IPA binaries are available directly on the [Releases](https://github.com/Alexxxxxxxxx11/NXremote/releases) page:
+
+1. Download **`NXremote.ipa`** from [Releases](https://github.com/Alexxxxxxxxx11/NXremote/releases/latest).
+2. Install via your preferred sideloading method:
+   - **TrollStore**: Direct installation with permanent entitlement.
+   - **AltStore / SideStore**: Standard sideloading with free 7-day Apple ID signing.
+   - **Feather / Scarlet / ESign**: Direct on-device signing with custom certificates.
+
+---
+
+## Author & License
+
+- **Author**: demxxx
+- **Bundle ID**: `com.demxxx.nxremote`
+- **License**: MIT License. See [LICENSE](LICENSE) for details.
