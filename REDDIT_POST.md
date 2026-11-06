@@ -61,7 +61,7 @@ Il file pre-compilato **`NXremote.ipa`** è scaricabile direttamente dalla sezio
 - Pronto all'installazione immediata con **TrollStore**, **Feather**, **AltStore** e **SideStore**.
 - Firmato con identificativo `com.demxxx.nxremote`.
 
-👉 **GitHub Repository**: *(Inserisci il tuo link alla repo)*
+👉 **GitHub Repository**: https://github.com/Alexxxxxxxxx11/NXremote
 
 Fatemi sapere cosa ne pensate nei commenti!
 — **demxxx**
