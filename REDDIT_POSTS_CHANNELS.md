@@ -13,7 +13,7 @@ Custom posts crafted for each targeted community. Copy and paste into each subre
 ### **Body:**
 Hey everyone,
 
-Whenever I wanted to play native ports on my Mac (like *Luigi’s Mansion 2* or other projects decompiled/built with `nxnative`), I found carrying an actual physical controller around inconvenient. The existing mobile controller apps were either full of ads, suffered from noticeable Bluetooth/Wi-Fi lag, or broke whenever I connected to a hotspot or guest Wi-Fi.
+Whenever I wanted to play Switch games and native ports on my Mac (using `nxnative` or C decompilations), I found carrying an actual physical controller around inconvenient. The existing mobile controller apps were either full of ads, suffered from noticeable Bluetooth/Wi-Fi lag, or broke whenever I connected to a hotspot or guest Wi-Fi.
 
 So I wrote **NXremote**—a dedicated iOS controller client and an ultra-lightweight C companion server:
 
@@ -84,7 +84,7 @@ Wanted to share an open-source project called **NXremote**. It's an iOS app that
 1. **Designed for gaming**: It doesn't emulate an on-screen gamepad with fixed plastic-looking analog sticks. Instead, it uses dynamic touch zones: the left screen side acts as Stick L (movement) and the right screen side acts as Stick R (camera/aiming), leaving full visibility for your fingers and HUD.
 2. **True local speed**: Streams 12-byte binary packets at 60 Hz directly over local WebSockets.
 3. **Multi-network fallback**: If you are playing on the go via mobile hotspot or a guest Wi-Fi network where mDNS/Bonjour discovery is blocked, the client runs an asynchronous subnet sweep in <1 second to auto-pair with your computer.
-4. **Hardware gestures**: Physical iPhone shake is mapped to the Switch shake gesture (useful for Luigi's Mansion, Mario, etc.).
+4. **Hardware gestures**: Physical iPhone shake is mapped to the Switch shake gesture.
 5. **Drop-in C SDK**: Consists of only two C files (`switchpad_host.h`/`.m`) that developers can drop into any game loop with two lines of code.
 
 ### Getting it:

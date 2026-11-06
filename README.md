@@ -26,7 +26,7 @@ NXremote turns your iPhone or iPad into an ultra-low latency wireless controller
   - No bulky on-screen thumbsticks obstructing your view.
 - **Classic Controls**: Full-sized Nintendo D-Pad with directional arrows, ABXY action diamond, and responsive shoulder triggers (`ZL`, `L`, `R`, `ZR`).
 - **Physical Shake Support**: Accelerometer-based shake detection forwarded directly to the game engine.
-- **Host Status & Telemetry HUD**: Displays the active game title (e.g., *Luigi's Mansion 2*) along with live device battery percentage.
+- **Host Status & Telemetry HUD**: Displays the connected game title along with live device battery percentage.
 - **Robust Multi-Network Discovery**:
   - Automatically resolves host machines via Bonjour mDNS.
   - Built-in asynchronous subnet auto-scan falls back gracefully on mobile hotspots and networks where multicast traffic is restricted.

@@ -47,6 +47,9 @@ int switchpad_host_start(int port, switchpad_input_cb cb);
 // Stop the background server
 void switchpad_host_stop(void);
 
+// Set custom game title displayed in the controller HUD (defaults to "NATIVE GAME")
+void switchpad_host_set_game_title(const char *title);
+
 // Polling alternative: read the latest atomic input state at any time
 void switchpad_host_get_state(uint32_t *out_buttons,
                               int16_t *out_lx, int16_t *out_ly,

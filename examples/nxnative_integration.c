@@ -1,8 +1,7 @@
 /**
  * NXremote SDK - Example Integration for nxnative / dm_input based ports
  * 
- * Works with decompilation & native ports (Luigi's Mansion 2, Super Mario 3D World,
- * Mario Kart, Zelda, Super Mario Odyssey, etc.)
+ * Works with Switch decompilations & native game ports (nxnative / C / SDL2).
  */
 
 #include "switchpad_host.h"

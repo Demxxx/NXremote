@@ -17,7 +17,14 @@
 #include <stdatomic.h>
 #include "switchpad_host.h"
 
-static int g_port = 8080;
+static char g_game_title[64] = "NATIVE GAME";
+
+void switchpad_host_set_game_title(const char *title) {
+    if (title && title[0]) {
+        strncpy(g_game_title, title, sizeof(g_game_title) - 1);
+        g_game_title[sizeof(g_game_title) - 1] = '\0';
+    }
+}
 static _Atomic int g_running = 0;
 static _Atomic int g_connected = 0;
 static char g_url[128] = "http://127.0.0.1:8080";
@@ -188,7 +195,8 @@ static void *client_worker(void *arg) {
                  "Content-Type: application/json\r\n"
                  "Access-Control-Allow-Origin: *\r\n"
                  "Connection: close\r\n\r\n"
-                 "{\"game\":\"LUIGI'S MANSION 2\"}\n");
+                 "{\"game\":\"%s\"}\n",
+                 g_game_title);
         send(fd, jresp, strlen(jresp), 0);
     } else {
         // Fallback HTTP response
