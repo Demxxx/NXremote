@@ -47,8 +47,8 @@ NXremote solves this:
 ---
 
 ### Links & Downloads:
-- **GitHub Repository**: https://github.com/Alexxxxxxxxx11/NXremote
-- **Latest IPA Release**: https://github.com/Alexxxxxxxxx11/NXremote/releases/latest
+- **GitHub Repository**: https://github.com/Demxxx/NXremote
+- **Latest IPA Release**: https://github.com/Demxxx/NXremote/releases/latest
 
 *(Attach `assets/icon.png` and `assets/layout.png` from the repo to your Reddit post for visual preview)*
 

@@ -7,7 +7,7 @@ A low-latency virtual Nintendo Switch controller for iOS, designed as a companio
 </p>
 
 <p align="center">
-  <a href="https://github.com/Alexxxxxxxxx11/NXremote/releases/latest"><img src="https://img.shields.io/badge/Release-v1.0.0-blue.svg" alt="Release"></a>
+  <a href="https://github.com/Demxxx/NXremote/releases/latest"><img src="https://img.shields.io/badge/Release-v1.0.0-blue.svg" alt="Release"></a>
   <img src="https://img.shields.io/badge/Platform-iOS%2015%2B-black.svg?logo=apple" alt="Platform">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License"></a>
   <img src="https://img.shields.io/badge/Author-demxxx-purple.svg" alt="Author">
@@ -118,9 +118,9 @@ Inputs are streamed over WebSocket as 12-byte little-endian binary frames:
 
 ## Installation
 
-Pre-built IPA binaries are available directly on the [Releases](https://github.com/Alexxxxxxxxx11/NXremote/releases) page:
+Pre-built IPA binaries are available directly on the [Releases](https://github.com/Demxxx/NXremote/releases) page:
 
-1. Download **`NXremote.ipa`** from [Releases](https://github.com/Alexxxxxxxxx11/NXremote/releases/latest).
+1. Download **`NXremote.ipa`** from [Releases](https://github.com/Demxxx/NXremote/releases/latest).
 2. Install via your preferred sideloading method:
    - **TrollStore**: Direct installation with permanent entitlement.
    - **AltStore / SideStore**: Standard sideloading with free 7-day Apple ID signing.

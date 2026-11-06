@@ -30,8 +30,8 @@ So I wrote **NXremote**—a dedicated iOS controller client and an ultra-lightwe
 
 It’s 100% open source under MIT. The pre-built `.ipa` is compiled with standard `LC_DYLD_INFO_ONLY` (no chained fixup issues) and works on TrollStore, AltStore, SideStore, and Feather.
 
-- **GitHub & Code**: https://github.com/Alexxxxxxxxx11/NXremote
-- **IPA Download**: https://github.com/Alexxxxxxxxx11/NXremote/releases/latest
+- **GitHub & Code**: https://github.com/Demxxx/NXremote
+- **IPA Download**: https://github.com/Demxxx/NXremote/releases/latest
 
 Let me know if you run into any issues or want features added.
 
@@ -60,8 +60,8 @@ If you play native ports or decompilations on your computer and don't want to ca
 - **Sideloading ready**: Clean 64-bit Mach-O binary signed ad-hoc, compatible with TrollStore (permanent), AltStore, SideStore, and Feather.
 
 The project is completely free and open-source (no ads, no tracking):
-- **Download `.ipa`**: https://github.com/Alexxxxxxxxx11/NXremote/releases/latest
-- **Source Code**: https://github.com/Alexxxxxxxxx11/NXremote
+- **Download `.ipa`**: https://github.com/Demxxx/NXremote/releases/latest
+- **Source Code**: https://github.com/Demxxx/NXremote
 
 Enjoy, and let me know your thoughts!
 
@@ -89,8 +89,8 @@ Wanted to share an open-source project called **NXremote**. It's an iOS app that
 
 ### Getting it:
 The iOS `.ipa` and full source are available on GitHub:
-- **Repository**: https://github.com/Alexxxxxxxxx11/NXremote
-- **Releases**: https://github.com/Alexxxxxxxxx11/NXremote/releases/latest
+- **Repository**: https://github.com/Demxxx/NXremote
+- **Releases**: https://github.com/Demxxx/NXremote/releases/latest
 
 Feedback and PRs are appreciated!
 
