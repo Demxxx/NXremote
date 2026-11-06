@@ -18,6 +18,7 @@
 #include "switchpad_host.h"
 
 static char g_game_title[64] = "NATIVE GAME";
+static int g_port = 8080;
 
 void switchpad_host_set_game_title(const char *title) {
     if (title && title[0]) {
